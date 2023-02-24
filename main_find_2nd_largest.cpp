@@ -10,12 +10,12 @@ using namespace std;
 
 int findSecondLargest(int arr[], int n)
 {
-    if (n < 3) //returns 1 if the array is smaller than size 2
+    if (n < 2) //returns 1 if the array is smaller than size 2
     {
         return -1;
     }
-    int largest = arr[0]; //defines largest element
-    int second_largest = 0; //defines second largest
+    int largest = INT_MIN; //defines largest (guarantees replacement by an element in arr)
+    int second_largest = INT_MIN; //defines second largest
     for (int i = 0; i < n; i++)
     {
         if (arr[i] > largest) //bumps second largest and largest up if largest element is found
@@ -23,10 +23,18 @@ int findSecondLargest(int arr[], int n)
             second_largest = largest;
             largest = arr[i];
         }
-        else if (arr[i] > second_largest) //bump second largest up if a larger element is found
+        else if (arr[i] > second_largest && arr[i] != largest) //bump second largest up if a larger element is found
         {
             second_largest = arr[i];
         }
+        else {
+            //resolves dangling else
+        }
+    }
+    if (second_largest == INT_MIN)
+    {
+        //occurs if all elements are same value according to spec
+        return -1;
     }
     return second_largest; //returns solution
 }
